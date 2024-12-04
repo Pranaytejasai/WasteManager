@@ -1,0 +1,48 @@
+{% extends "profileapp/base.html" %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-8 max-w-md bg-gray-900 text-gray-100 rounded-lg backdrop-blur-lg">
+    <h2 class="text-2xl font-extrabold text-orange-500 mb-6">Add Address</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="mb-4">
+            <label for="id_address" class="block text-sm font-medium text-gray-100">Address</label>
+            {{ form.address }}
+        </div>
+
+        <div class="mb-4">
+            <label for="id_address_type" class="block text-sm font-medium text-gray-100">Address Type</label>
+            {{ form.address_type }}
+        </div>
+
+        <div class="mb-4">
+            <label for="id_city" class="block text-sm font-medium text-gray-100">City</label>
+            {{ form.city }}
+        </div>
+
+        <div class="mb-4">
+            <label for="id_state" class="block text-sm font-medium text-gray-100">State</label>
+            {{ form.state }}
+        </div>
+
+        <div class="mb-4">
+            <label for="id_postal_code" class="block text-sm font-medium text-gray-100">Postal Code</label>
+            {{ form.postal_code }}
+        </div>
+
+        <div class="mb-4">
+            <button type="submit" class="w-full bg-orange-500 text-white p-3 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                Add Address
+            </button>
+        </div>
+    </form>
+
+    <a href="{% url 'profileapp:user_profile' %}" class="text-orange-500 hover:underline mt-4 block text-center">Back to Profile</a>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% endblock %}

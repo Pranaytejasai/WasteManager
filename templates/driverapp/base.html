@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Driver App{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Toggle mobile menu visibility
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-poppins">
+    <nav class="bg-gray-800 text-gray-100 shadow-md backdrop-blur-lg">
+        <div class="container mx-auto flex items-center justify-between p-6">
+            <a href="#" class="text-2xl font-extrabold text-orange-500">Waste Manager</a>
+            <button class="lg:hidden block" onclick="toggleMenu()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <div id="mobile-menu" class="hidden lg:flex space-x-6">
+                {% if user.is_authenticated %}
+                    <span>Welcome, {{ user.username }}!</span>
+                    <a href="{% url 'logout_user' %}" class="underline text-orange-400">Logout</a>
+                {% else %}
+                    <a href="{% url 'login_user' %}" class="underline text-orange-400">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <main class="py-12 bg-gray-900">
+        <div class="container mx-auto px-4">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
+</body>
+</html>

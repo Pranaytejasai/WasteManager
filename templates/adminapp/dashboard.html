@@ -1,0 +1,56 @@
+{% extends "adminapp/base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<!-- Background with circles -->
+<div class="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-500 opacity-20 blur-3xl"></div>
+
+<!-- Main content container -->
+<div class="relative z-10 min-h-screen bg-gray-900 p-6 sm:p-8 rounded-lg backdrop-blur-md bg-opacity-50">
+
+    <!-- Stats Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all backdrop-blur-md bg-opacity-30">
+            <h3 class="text-lg font-semibold text-gray-200">Total Requests</h3>
+            <p class="text-2xl font-bold text-green-400">{{ total_requests }}</p>
+        </div>
+        <div class="bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all backdrop-blur-md bg-opacity-30">
+            <h3 class="text-lg font-semibold text-gray-200">Pending Requests</h3>
+            <p class="text-2xl font-bold text-green-300">{{ pending_requests }}</p>
+        </div>
+        <div class="bg-gray-600 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all backdrop-blur-md bg-opacity-30">
+            <h3 class="text-lg font-semibold text-gray-200">Rejected Requests</h3>
+            <p class="text-2xl font-bold text-red-400">{{ rejected_requests }}</p>
+        </div>
+        <div class="bg-gray-500 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all backdrop-blur-md bg-opacity-30">
+            <h3 class="text-lg font-semibold text-gray-200">Completed Requests</h3>
+            <p class="text-2xl font-bold text-gray-100">{{ completed_requests }}</p>
+        </div>
+        <div class="bg-gray-400 p-6 rounded-lg shadow-lg hover:shadow-xl transition-all backdrop-blur-md bg-opacity-30">
+            <h3 class="text-lg font-semibold text-gray-200">Total Users</h3>
+            <p class="text-2xl font-bold text-gray-100">{{ total_users }}</p>
+        </div>
+    </div>
+
+    <!-- Action Cards Section -->
+    <h2 class="text-2xl font-semibold text-gray-100 mb-6">Quick Actions</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="{% url 'adminapp:manage_pending_requests' %}" class="bg-gray-800 text-white hover:bg-gray-700 p-6 rounded-lg shadow-md text-center transition duration-200 backdrop-blur-md bg-opacity-40">
+            <i class="fas fa-tasks text-3xl mb-2"></i>
+            <p class="font-semibold">Manage Pending Requests</p>
+        </a>
+        <a href="{% url 'adminapp:view_completed_requests' %}" class="bg-gray-700 text-white hover:bg-gray-600 p-6 rounded-lg shadow-md text-center transition duration-200 backdrop-blur-md bg-opacity-40">
+            <i class="fas fa-check-circle text-3xl mb-2"></i>
+            <p class="font-semibold">View Completed Requests</p>
+        </a>
+        <a href="{% url 'adminapp:manage_users' %}" class="bg-gray-600 text-white hover:bg-gray-500 p-6 rounded-lg shadow-md text-center transition duration-200 backdrop-blur-md bg-opacity-40">
+            <i class="fas fa-users text-3xl mb-2"></i>
+            <p class="font-semibold">Manage Users</p>
+        </a>
+        </a>
+    </div>
+</div>
+
+{% endblock %}
+

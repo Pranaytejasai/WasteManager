@@ -1,0 +1,48 @@
+{% extends "profileapp/base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-8 space-y-8 bg-gray-900 backdrop-blur-lg rounded-lg glass-card">
+    <!-- Page Header -->
+    <h2 class="text-2xl font-extrabold text-gray-100 border-b pb-2">My Waste Collection Requests</h2>
+
+    {% if pending_requests %}
+    <ul class="space-y-6">
+        {% for request in pending_requests %}
+        <li class="p-6 bg-white backdrop-blur-lg shadow-lg rounded-lg border border-orange-500">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Request Details -->
+                <div>
+                    <p><strong class="text-orange-600">Waste Type:</strong> {{ request.waste_type }}</p>
+                    <p><strong class="text-orange-600">Quantity:</strong> {{ request.quantity }} kg</p>
+                    <p><strong class="text-orange-600">Collection Time:</strong> {{ request.collection_time }}</p>
+                    <p><strong class="text-orange-600">Location:</strong> {{ request.collection_location }}</p>
+                    {% if request.driver %}
+                    <p><strong class="text-orange-600">Assigned Driver:</strong> 
+                        <a href="{% url 'driverapp:view_driver_details' request.driver.id %}" 
+                           class="text-gray-900 hover:text-blue-500">
+                            {{ request.driver.username }}
+                        </a>
+                    </p>
+                    {% else %}
+                    <p><strong class="text-gray-900">Assigned Driver:</strong> None</p>
+                    {% endif %}
+                </div>
+
+                <!-- Action Button -->
+                <div class="flex sm:justify-end items-center">
+                    <a href="{% url 'wasteapp:mark_as_completed' request.id %}" 
+                       class="bg-green-600 text-gray-200 py-2 px-6 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300 ease-in-out">
+                        Mark as Completed
+                    </a>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-gray-600">No pending requests found.</p>
+    {% endif %}
+</div>
+{% endblock %}

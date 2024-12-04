@@ -1,0 +1,85 @@
+{% extends "driverapp/base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-8 py-8 bg-gray-900 text-gray-100 rounded-lg backdrop-blur-lg">
+    <h1 class="text-2xl lg:text-3xl font-extrabold text-orange-500 mb-6">Driver Dashboard</h1>
+
+    <!-- Navigation Links -->
+    <div class="flex flex-wrap gap-6 mb-8">
+        <a href="{% url 'driverapp:profile' %}" class="bg-gray-800 hover:bg-gray-700 text-gray-100 font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out">
+            Profile
+        </a>
+        <a href="#" class="bg-gray-800 hover:bg-gray-700 text-gray-100 font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out">
+            Assigned Tasks
+        </a>
+    </div>
+
+    <!-- Assigned Tasks -->
+    <section>
+        <h2 class="text-xl lg:text-2xl font-semibold text-orange-400 mb-6">Assigned Tasks</h2>
+        {% if assigned_tasks %}
+        <div class="overflow-x-auto">
+            <table class="w-full bg-white/20 backdrop-blur-lg shadow-lg rounded-lg">
+                <thead class="bg-gray-800 text-gray-100">
+                    <tr>
+                        <th class="py-2 px-4 text-left">User</th>
+                        <th class="py-2 px-4 text-left">Waste Type</th>
+                        <th class="py-2 px-4 text-left">Quantity (kg)</th>
+                        <th class="py-2 px-4 text-left">Collection Time</th>
+                        <th class="py-2 px-4 text-left">Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in assigned_tasks %}
+                    <tr class="border-t hover:bg-gray-700">
+                        <td class="py-2 px-4">{{ task.user.username }}</td>
+                        <td class="py-2 px-4">{{ task.waste_type }}</td>
+                        <td class="py-2 px-4">{{ task.quantity }}</td>
+                        <td class="py-2 px-4">{{ task.collection_time }}</td>
+                        <td class="py-2 px-4">{{ task.collection_location }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-gray-600">No tasks assigned to you.</p>
+        {% endif %}
+    </section>
+
+    <!-- Completed Tasks -->
+    <section class="mt-8">
+        <h2 class="text-xl lg:text-2xl font-semibold text-orange-400 mb-6">Completed Tasks</h2>
+        {% if completed_tasks %}
+        <div class="overflow-x-auto">
+            <table class="w-full bg-white/20 backdrop-blur-lg shadow-lg rounded-lg">
+                <thead class="bg-gray-800 text-gray-100">
+                    <tr>
+                        <th class="py-2 px-4 text-left">User</th>
+                        <th class="py-2 px-4 text-left">Waste Type</th>
+                        <th class="py-2 px-4 text-left">Quantity (kg)</th>
+                        <th class="py-2 px-4 text-left">Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in completed_tasks %}
+                    <tr class="border-t hover:bg-gray-700">
+                        <td class="py-2 px-4">{{ task.user.username }}</td>
+                        <td class="py-2 px-4">{{ task.waste_type }}</td>
+                        <td class="py-2 px-4">{{ task.quantity }}</td>
+                        <td class="py-2 px-4">{{ task.collection_location }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-gray-600">No completed tasks.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% endblock %}

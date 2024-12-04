@@ -1,0 +1,84 @@
+{% extends "driverapp/base.html" %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-8 bg-gray-900 text-gray-100 rounded-lg backdrop-blur-lg">
+    <h1 class="text-2xl font-extrabold text-orange-500 mb-6">Driver Dashboard</h1>
+
+    <!-- Navigation Links -->
+    <div class="flex space-x-4 mb-6">
+        <a href="{% url 'driverapp:profile' %}" class="bg-gray-800 hover:bg-gray-700 text-gray-100 font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+            Profile
+        </a>
+    </div>
+
+    <!-- Assigned Tasks Section -->
+    <h2 class="text-xl font-semibold mt-6 mb-4 text-orange-400">Assigned Tasks</h2>
+    {% if assigned_tasks %}
+        <table class="min-w-full bg-white/20 backdrop-blur-lg shadow-lg rounded-lg mb-8">
+            <thead class="bg-gray-800 text-gray-100">
+                <tr>
+                    <th class="py-2 px-4 text-left">User</th>
+                    <th class="py-2 px-4 text-left">Waste Type</th>
+                    <th class="py-2 px-4 text-left">Quantity (kg)</th>
+                    <th class="py-2 px-4 text-left">Collection Time</th>
+                    <th class="py-2 px-4 text-left">Location</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-100">
+                {% for task in assigned_tasks %}
+                    <tr class="border-t hover:bg-gray-700">
+                        <td class="py-2 px-4">{{ task.user.username }}</td>
+                        <td class="py-2 px-4">{{ task.waste_type }}</td>
+                        <td class="py-2 px-4">{{ task.quantity }}</td>
+                        <td class="py-2 px-4">{{ task.collection_time }}</td>
+                        <td class="py-2 px-4">{{ task.collection_location }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-gray-600 mt-4">No tasks assigned to you.</p>
+    {% endif %}
+
+    <!-- Completed Tasks Section -->
+    <!-- Completed Tasks Section -->
+    <h2 class="text-xl font-semibold mt-6 mb-4 text-orange-400">Completed Tasks</h2>
+    {% if completed_tasks %}
+        <table class="min-w-full bg-white/20 backdrop-blur-lg shadow-lg rounded-lg">
+            <thead class="bg-gray-800 text-gray-100">
+                <tr>
+                    <th class="py-2 px-4 text-left">User </th>
+                    <th class="py-2 px-4 text-left">Waste Type</th>
+                    <th class="py-2 px-4 text-left">Quantity (kg)</th>
+                    <th class="py-2 px-4 text-left">Completed On</th>
+                    <th class="py-2 px-4 text-left">Location</th>
+                    <th class="py-2 px-4 text-left">Action</th> <!-- New column for action -->
+                </tr>
+            </thead>
+            <tbody class="text-gray-100">
+                {% for task in completed_tasks %}
+                    <tr class="border-t hover:bg-gray-700">
+                        <td class="py-2 px-4">{{ task.user.username }}</td>
+                        <td class="py-2 px-4">{{ task.waste_type }}</td>
+                        <td class="py-2 px-4">{{ task.quantity }}</td>
+                        <td class="py-2 px-4">{{ task.collection_time }}</td>
+                        <td class="py-2 px-4">{{ task.collection_location }}</td>
+                        <td class="py-2 px-4">
+                            <form action="{% url 'driverapp:send_email' task.user.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded">Send Email</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-gray-600 mt-4">No completed tasks.</p>
+    {% endif %}
+    </div>
+    {% endblock %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% endblock %}

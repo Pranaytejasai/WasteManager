@@ -1,0 +1,40 @@
+{% extends 'driverapp/base.html' %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-8 max-w-md bg-gray-900 text-gray-700 rounded-lg backdrop-blur-lg">
+    <h1 class="text-2xl font-extrabold text-orange-500 mb-6">Driver Profile</h1>
+    <p class="text-gray-300 mb-6">Please fill in your details to complete your profile.</p>
+
+    <form method="post" class="bg-white/20 backdrop-blur-lg shadow-lg rounded-lg p-6 space-y-6">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="mb-6">
+                <label class="block text-gray-200 text-sm font-bold mb-2" for="{{ field.id_for_label }}">
+                    {{ field.label_tag }}
+                </label>
+                <div class="relative">
+                    {{ field }}
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                        <i class="fas fa-user text-gray-500"></i>
+                    </div>
+                </div>
+                {% if field.help_text %}
+                    <p class="text-xs italic text-gray-400">{{ field.help_text }}</p>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p class="text-red-500 text-xs italic">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-orange-500 text-white font-bold py-2 px-6 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-300 ease-in-out">
+                Save Profile
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% endblock %}

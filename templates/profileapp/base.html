@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}User Dashboard{% endblock %} - Waste Manager</title>
+    
+
+    <!-- Include Tailwind CSS and Alpine.js -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
+</head>
+<body class="bg-gray-800 font-sans leading-relaxed tracking-wide">
+    <!-- Navbar -->
+    <header class="bg-gray-900 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between px-6 py-4">
+            <a href="{% url 'home' %}" class="text-xl font-bold text-orange-600 hover:text-orange-800">Waste Manager</a>
+            <div>
+                <a href="{% url 'logout_user' %}" class="text-sm text-gray-100 hover:text-red-500 px-4 py-2 border rounded-md border-gray-300 shadow-sm">Logout</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <div class="container mx-auto mt-8 flex flex-col md:flex-row">
+        <!-- Sidebar -->
+        <aside class="w-full md:w-1/4 bg-gray-900 p-6 shadow-md rounded-lg mb-8 md:mb-0">
+            <h2 class="text-lg font-bold text-gray-100 mb-4">User Dashboard</h2>
+            <ul class="space-y-2">
+                <li>
+                    <a href="{% url 'wasteapp:my_requests' %}" class="block text-gray-200 hover:bg-orange-100 hover:text-orange-700 rounded-md px-3 py-2">
+                        My Requests
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'wasteapp:my_history' %}" class="block text-gray-200 hover:bg-orange-100 hover:text-orange-700 rounded-md px-3 py-2">
+                        My History
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'wasteapp:submit_request' %}" class="block text-gray-200 hover:bg-orange-100 hover:text-orange-700 rounded-md px-3 py-2">
+                        Submit Request
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'profileapp:user_profile' %}" class="block text-gray-200 hover:bg-orange-100 hover:text-orange-700 rounded-md px-3 py-2">
+                        Profile
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Dynamic Content Section -->
+        <main class="flex-grow bg-gray-900 p-6 shadow-md rounded-lg">
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-4 mt-8 text-center text-white">
+        <p>&copy; 2024 Waste Manager. All rights reserved.</p>
+    </footer>
+</body>
+</html>

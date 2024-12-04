@@ -1,0 +1,18 @@
+{% extends "driverapp/base.html" %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-8 max-w-md bg-gray-900 text-gray-100 rounded-lg backdrop-blur-lg">
+    <h2 class="text-2xl font-extrabold text-orange-500 mb-6">Driver Details</h2>
+    <div class="p-6 bg-white/20 backdrop-blur-lg shadow-lg rounded-lg space-y-4">
+        <p class="text-gray-200"><strong>Name:</strong> {{ driver_profile.user.username }}</p>
+        <p class="text-gray-200"><strong>Phone Number:</strong> {{ driver_profile.phone_number }}</p>
+        <p class="text-gray-200"><strong>License Number:</strong> {{ driver_profile.license_number }}</p>
+        <p class="text-gray-200"><strong>Vehicle Details:</strong> {{ driver_profile.vehicle_details }}</p>
+        <p class="text-gray-200"><strong>Address:</strong> {{ driver_profile.address }}</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% endblock %}

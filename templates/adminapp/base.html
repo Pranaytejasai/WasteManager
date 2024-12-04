@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard{% endblock %}</title>
+
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- FontAwesome CDN for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
+    <!-- Google Font: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 font-sans leading-normal tracking-normal">
+
+    <!-- Background with Gradient Circles -->
+    <div class="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-500 opacity-20 blur-3xl"></div>
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="bg-gray-900 text-white shadow-md fixed w-full z-10 top-0 left-0">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <h1 class="text-xl font-semibold">Admin Dashboard</h1>
+                <div class="lg:hidden">
+                    <button id="menu-button" class="text-white focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="hidden lg:flex items-center space-x-6" :class="{ 'block': open, 'hidden': !open }">
+                <a href="{% url 'adminapp:dashboard' %}" class="text-gray-300 hover:text-red-400">Dashboard</a>
+                <a href="{% url 'adminapp:manage_users' %}" class="text-gray-300 hover:text-gray-100">Manage</a>
+                <a href="{% url 'login_user' %}" class="text-gray-300 hover:text-gray-100">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden fixed top-0 left-0 w-full bg-grey-900 text-orange-600 h-screen hidden">
+        <div class="flex justify-between items-center p-4">
+            <h1 class="text-xl font-semibold">Waste Manager <i>Admin</i></h1>
+        </div>
+        <div class="lg:hidden">
+            <button id="menu-button" class="text-white focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="hidden lg:flex items-center space-x-6" :class="{ 'block': open, 'hidden': !open }">
+            <a href="{% url 'adminapp:dashboard' %}" class="text-gray-300 hover:text-red-400">Dashboard</a>
+            <a href="{% url 'adminapp:manage_users' %}" class="text-gray-300 hover:text-gray-100">Manage</a>
+            <a href="{% url 'login_user' %}" class="text-gray-300 hover:text-gray-100">Login</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 pt-20 pb-8 px-4 mx-auto max-w-7xl backdrop-blur-md bg-opacity-40">
+        {% block content %}
+        
+        <!-- Orange Button to Redirect to Login -->
+        <div class="text-center mt-8">
+            <a href="{% url 'login_user' %}" class="inline-block bg-orange-500 text-white font-semibold py-2 px-4 rounded-md shadow-md hover:bg-orange-600 transition duration-300">
+                Go to Login
+            </a>
+        </div>
+    
+        {% endblock %}
+    </div>
+
+    <!-- Footer (Optional) -->
+    <footer class="bg-green-700 text-white text-center p-4">
+        <p>&copy; 2024 Waste Manager. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuButton = document.getElementById('menu-button');
+        const closeButton = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+        });
+
+        closeButton.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    </script>
+
+</body>
+
+</html>

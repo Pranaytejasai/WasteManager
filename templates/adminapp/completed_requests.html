@@ -1,0 +1,46 @@
+{% extends "adminapp/base.html" %}
+
+{% block title %}Completed Waste Collection Requests{% endblock %}
+
+{% block content %}
+<!-- Background with circles -->
+<div class="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-500 opacity-20 blur-3xl"></div>
+
+<!-- Main content container -->
+<div class="relative z-10 min-h-screen bg-gray-900 p-6 sm:p-8 rounded-lg backdrop-blur-md bg-opacity-50">
+
+    <h2 class="text-3xl font-extrabold text-gray-100 mb-6 text-center">Completed Waste Collection Requests</h2>
+
+    {% if completed_requests %}
+        <div class="overflow-x-auto bg-white shadow-lg rounded-lg backdrop-blur-md bg-opacity-30">
+            <table class="min-w-full">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="py-3 px-6 text-left text-lg">User</th>
+                        <th class="py-3 px-6 text-left text-lg">Waste Type</th>
+                        <th class="py-3 px-6 text-left text-lg">Quantity (kg)</th>
+                        <th class="py-3 px-6 text-left text-lg">Collection Time</th>
+                        <th class="py-3 px-6 text-left text-lg">Location</th>
+                        <th class="py-3 px-6 text-left text-lg">Completed On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in completed_requests %}
+                        <tr class="border-t hover:bg-gray-200">
+                            <td class="py-3 px-6">{{ request.user.username }}</td>
+                            <td class="py-3 px-6">{{ request.waste_type }}</td>
+                            <td class="py-3 px-6">{{ request.quantity }}</td>
+                            <td class="py-3 px-6">{{ request.collection_time }}</td>
+                            <td class="py-3 px-6">{{ request.collection_location }}</td>
+                            <td class="py-3 px-6">{{ request.updated_at|date:"F j, Y, g:i a" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-gray-600 mt-4 text-center">No completed requests found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

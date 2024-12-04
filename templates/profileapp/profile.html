@@ -1,0 +1,53 @@
+{% extends "profileapp/base.html" %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block content %}
+<div class="space-y-8 bg-gray-900 text-gray-100 p-8 rounded-lg backdrop-blur-lg">
+    <!-- User Profile Header -->
+    <h2 class="text-2xl font-extrabold text-orange-500 border-b pb-2">User Profile</h2>
+
+    <!-- User Details -->
+    <div class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+                <p><span class="font-medium">Username:</span> {{ user.username }}</p>
+                <p><span class="font-medium">First Name:</span> {{ user.first_name }}</p>
+                <p><span class="font-medium">Last Name:</span> {{ user.last_name }}</p>
+                <p><span class="font-medium">Email:</span> {{ user.email }}</p>
+            </div>
+            {% if user.userprofile.profile_picture %}
+            <div>
+                <p class="font-medium">Profile Picture:</p>
+                <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" class="w-24 h-24 rounded-full border border-orange-500">
+            </div>
+            {% endif %}
+        </div>
+        
+    </div>
+
+    <!-- Saved Addresses Section -->
+    <div>
+        <h3 class="text-xl font-semibold text-orange-500 border-b pb-2 mb-4">Saved Addresses</h3>
+        {% for address in addresses %}
+        <div class="p-4 border border-orange-500 rounded-lg shadow-md mb-4 bg-gray-800">
+            <p class="font-medium">{{ address.address }} ({{ address.address_type }})</p>
+            <p>{{ address.city }}, {{ address.state }} - {{ address.postal_code }}</p>
+            {% if address.default %}
+            <span class="text-green-700 bg-green-100 px-2 py-1 rounded text-sm">Default Address</span>
+            {% else %}
+            <a href="{% url 'profileapp:set_default_address' address.id %}" class="text-orange-500 hover:underline text-sm">Set as Default</a>
+            {% endif %}
+            <a href="{% url 'profileapp:delete_address' address.id %}" class="text-red-500 hover:underline text-sm block mt-2">Delete Address</a>
+        </div>
+        {% empty %}
+        <p class="text-gray-700">No saved addresses. <a href="{% url 'profileapp:add_address' %}" class="text-orange-500 hover:underline">Add New Address</a></p>
+        {% endfor %}
+        <a href="{% url 'profileapp:add_address' %}" class="text-orange-500 hover:underline mt-4 block">Add New Address</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% endblock %}

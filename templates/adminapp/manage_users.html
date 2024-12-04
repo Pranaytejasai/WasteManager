@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* Global Font Application */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Main Content -->
+    <div class="container mx-auto mt-8 p-6 bg-gray-50 rounded-lg shadow-lg backdrop-blur-md bg-opacity-60">
+        <h2 class="text-3xl font-extrabold text-gray-800 mb-6 text-center">Manage Users</h2>
+
+        {% if users %}
+        <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <table class="min-w-full">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="py-3 px-6 text-left text-lg">Username</th>
+                        <th class="py-3 px-6 text-left text-lg">Email</th>
+                        <th class="py-3 px-6 text-left text-lg">Status</th>
+                        <th class="py-3 px-6 text-left text-lg">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr class="border-t hover:bg-gray-200">
+                        <td class="py-3 px-6">{{ user.username }}</td>
+                        <td class="py-3 px-6">{{ user.email }}</td>
+                        <td class="py-3 px-6">
+                            {% if user.is_active %}
+                                <span class="text-green-600 font-semibold">Active</span>
+                            {% else %}
+                                <span class="text-red-600 font-semibold">Inactive</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-3 px-6 flex space-x-4">
+                            <a href="{% url 'adminapp:toggle_user_status' user.id %}" class="bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-800 transition-colors duration-300">
+                                {% if user.is_active %} Deactivate {% else %} Activate {% endif %}
+                            </a>
+                            <a href="{% url 'adminapp:delete_user' user.id %}" class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-800 transition-colors duration-300">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        {% else %}
+            <p class="text-gray-600 mt-4 text-center">No users found.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

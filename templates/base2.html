@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Manager</title>
+
+    <!-- Tailwind CSS and Alpine.js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #1A1A1A;
+            position: relative;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .bg-circles {
+            position: absolute;
+            top: -50px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            filter: blur(50px);
+            border-radius: 50%;
+        }
+
+        .bg-circles-secondary {
+            position: absolute;
+            bottom: -50px;
+            right: 100px;
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            filter: blur(40px);
+            border-radius: 50%;
+        }
+        a {
+            color: #f19d2f;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        a:hover {
+            color: #ffffff; /* New hover color */
+            transform: scale(1.1); /* Optional scaling effect */
+        }
+    </style>
+</head>
+
+<body class="text-gray-300">
+
+    <!-- Background Circles -->
+    <div class="bg-circles"></div>
+    <div class="bg-circles-secondary"></div>
+
+    <!-- Header Section -->
+    <header>
+        <nav class="glass-card shadow py-4">
+            <div class="container mx-auto px-4 flex items-center justify-between">
+                <!-- Logo -->
+                <a href="{% url 'home' %}" class="text-lg font-bold text-gray-100">Waste Manager</a>
+
+                <!-- Mobile Menu Button -->
+                <button @click="open = !open" class="lg:hidden text-gray-100 focus:outline-none" aria-label="Toggle Navigation" x-data="{ open: false }">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+
+                <!-- Navigation Links -->
+                <div class="hidden lg:flex items-center space-x-6" :class="{ 'block': open, 'hidden': !open }">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'logout_user' %}" class="text-gray-300 hover:text-red-400">Logout</a>
+                    {% else %}
+                    <a href="{% url 'register_user' %}" class="text-gray-300 hover:text-gray-100">Register</a>
+                    <a href="{% url 'login_user' %}" class="text-gray-300 hover:text-gray-100">Login</a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main class="container mx-auto my-8 px-4" x-data="{ message: '', showMessage: false }">
+        <section>
+            <!-- Notification Banner -->
+            <div x-show="showMessage" class="glass-card text-green-300 p-4 rounded-lg mb-4 transition duration-300" x-transition>
+                <span x-text="message"></span>
+            </div>
+            {% block content %}
+            {% endblock %}
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="glass-card py-6 mt-8">
+        <div class="container mx-auto text-center text-gray-300 px-4">
+            <p>&copy; 2024 Waste Manager. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

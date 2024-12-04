@@ -1,0 +1,60 @@
+{% extends "base2.html" %}
+
+{% block content %}
+<section class="flex items-center justify-center py-12 min-h-screen relative">
+    <!-- Aesthetic Background Circles -->
+    
+
+    <div class="w-full max-w-md glass-card p-8 shadow-lg rounded-lg">
+        <h2 class="text-3xl font-bold text-center text-gray-100 mb-8">Login</h2>
+
+        <!-- Success/Error Messages -->
+        <div x-data="{ message: '', type: '' }">
+            {% if messages %}
+                {% for message in messages %}
+                    <div :class="type === 'error' ? 'bg-red-900 text-red-300' : 'bg-green-900 text-green-300'" 
+                         class="p-4 rounded-lg mb-4 animate-fade" x-text="'{{ message }}'"></div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Form Section -->
+        <form method="POST" action="{% url 'login_user' %}" class="space-y-6">
+            {% csrf_token %}
+            <!-- Username Field -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+                <input type="text" name="username" id="username" required 
+                       class="mt-1 w-full px-4 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-shadow">
+            </div>
+
+            <!-- Password Field -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                <input type="password" name="password" id="password" required 
+                       class="mt-1 w-full px-4 py-2 border border-gray-700 bg-gray-800 text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-shadow">
+            </div>
+
+            <!-- Remember Me Checkbox -->
+            <div class="flex items-center">
+                <input type="checkbox" name="remember" id="remember" 
+                       class="h-4 w-4 text-orange-600 border-gray-700 bg-gray-800 rounded focus:ring-orange-500">
+                <label for="remember" class="ml-2 text-sm text-gray-300">Remember me</label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" 
+                    class="w-full py-3 bg-yellow-600 text-gray-100 font-semibold rounded-lg shadow-md hover:bg-yellow-900 hover:shadow-lg transition-all duration-300">
+                Login
+            </button>
+
+            <!-- Links -->
+            
+            <div class="text-sm text-center text-gray-400 mt-4">
+                Don't have an account? 
+                <a href="{% url 'register_user' %}" class="text-gray-100 hover:text-yellow-500 transition duration-300">Register here</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

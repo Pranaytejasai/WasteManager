@@ -1,0 +1,42 @@
+{% extends "profileapp/base.html" %}
+
+{% block title %}My Completed Requests{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-8 space-y-8 bg-gray-900 backdrop-blur-lg rounded-lg glass-card font-poppins">
+    <!-- Page Header -->
+    <h2 class="text-2xl font-extrabold text-gray-100 border-b pb-2">My Completed Waste Collection Requests</h2>
+
+    {% if completed_requests %}
+    <ul class="space-y-6">
+        {% for request in completed_requests %}
+        <li class="p-6 bg-white backdrop-blur-lg shadow-lg rounded-lg border border-orange-500">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Request Details -->
+                <div class="space-y-2">
+                    <p><strong class="text-orange-600">Waste Type:</strong> {{ request.waste_type }}</p>
+                    <p><strong class="text-orange-600">Quantity:</strong> {{ request.quantity }} kg</p>
+                    <p><strong class="text-orange-600">Collection Time:</strong> {{ request.collection_time }}</p>
+                    <p><strong class="text-orange-600">Location:</strong> {{ request.collection_location }}</p>
+                    <p><strong class="text-orange-600">Created At:</strong> {{ request.created_at|date:"F j, Y, g:i a" }}</p>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <!-- Empty State -->
+    <div class="text-center py-12">
+        <p class="text-gray-300 text-lg">No completed requests found.</p>
+        <a href="{% url 'wasteapp:submit_request' %}" 
+           class="mt-4 inline-block bg-orange-500 text-white py-2 px-6 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 transition duration-300 ease-in-out">
+            Submit a New Request
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% endblock %}

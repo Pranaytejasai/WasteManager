@@ -1,0 +1,59 @@
+{% extends "profileapp/base.html" %}
+
+{% block content %}
+<div class="container mx-auto mt-8 p-8 max-w-md bg-gray-900 text-gray-100 rounded-lg backdrop-blur-lg">
+    <h2 class="text-2xl font-extrabold text-orange-500 mb-6">Edit Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% load widget_tweaks %}
+        
+        <div class="mb-6">
+            <label for="id_username" class="block text-sm font-medium text-gray-100">Username</label>
+            <div class="relative">
+                {{ form.username|add_class:"block w-full bg-gray-800 text-gray-100 border border-orange-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <label for="id_first_name" class="block text-sm font-medium text-gray-100">First Name</label>
+            <div class="relative">
+                {{ form.first_name|add_class:"block w-full bg-gray-800 text-gray-100 border border-orange-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <label for="id_last_name" class="block text-sm font-medium text-gray-100">Last Name</label>
+            <div class="relative">
+                {{ form.last_name|add_class:"block w-full bg-gray-800 text-gray-100 border border-orange-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <label for="id_email" class="block text-sm font-medium text-gray-100">Email</label>
+            <div class="relative">
+                {{ form.email|add_class:"block w-full bg-gray-800 text-gray-100 border border-orange-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <label for="id_profile_picture" class="block text-sm font-medium text-gray-100">Profile Picture</label>
+            <div class="relative">
+                {{ form.profile_picture|add_class:"block w-full bg-gray-800 text-gray-100 border border-orange-500 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-orange-500" }}
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <button type="submit" class="w-full bg-orange-500 text-white p-3 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                Save Changes
+            </button>
+        </div>
+    </form>
+
+    <a href="{% url 'profileapp:user_profile' %}" class="text-orange-500 hover:underline mt-4">Back to Profile</a>
+</div>
+{% endblock %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+{% endblock %}
